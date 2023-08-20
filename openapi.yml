@@ -1,0 +1,155 @@
+openapi: '3.0.2'
+info:
+  title: Power Dates
+  version: '1.0'
+servers:
+  - url: http://localhost:8080
+
+components:
+  schemas:
+    dates:
+      type: object
+      properties:
+        success:
+          type: boolean
+        announce: 
+          type: string
+          example: "03/10/2012"
+        available:
+          type: string
+          example: "19/10/2012"
+        wdfm:
+          type: string
+          example: "30/11/2015"
+        eos:
+          type: string
+          example: "30/06/2021"
+
+paths:
+  /healthz:
+    get:
+      description: Check the health of the API service
+      summary: Healthcheck
+      responses:
+        '200':
+          description: OK
+  /:
+    get:
+      description: Base path of API service
+      summary: Base path
+      responses:
+        '200':
+          description: OK
+  /announce/{mtm}:
+    get:
+      summary: Get announcement date
+      description: Return the announcement date of a specific machine type model
+      parameters: 
+        - in: path
+          schema: 
+            type: string
+          required: true
+          name: mtm
+          description: The machine type model designation of a Power server (ie 9117-MMD)
+      responses:
+        '200':
+          description: Succesful return of an announcement date
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 03/10/2012
+  /ga/{mtm}:
+    get:
+      summary: Get general availability date
+      description: Return the general availability (GA) date of a specific machine type model
+      parameters: 
+        - in: path
+          schema: 
+            type: string
+          required: true
+          name: mtm
+          description: The machine type model designation of a Power server (ie 9117-MMD)
+      responses:
+        '200':
+          description: Succesful return of a general availability date
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 19/10/2012
+  /wdfm/{mtm}:
+    get:
+      summary: Get withdrawn from marketing date
+      description: Return the withdrawal from marketing (WDFM) date of a specific machine type model
+      parameters: 
+        - in: path
+          schema: 
+            type: string
+          required: true
+          name: mtm
+          description: The machine type model designation of a Power server (ie 9117-MMD)
+      responses:
+        '200':
+          description: Succesful return of a withdrawal from marketing date
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 30/11/2015
+  /eos/{mtm}:
+    get:
+      summary: Get end of service date
+      description: Return the standard end of service (EOS) date of a specific machine type model
+      parameters: 
+        - in: path
+          schema: 
+            type: string
+          required: true
+          name: mtm
+          description: The machine type model designation of a Power server (ie 9117-MMD)
+      responses:
+        '200':
+          description: Succesful return of an end of service date
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 30/06/2021
+  /dates/{mtm}:
+    get:
+      summary: Get all dates
+      description: Return a full list of dates relating to a specific machine type model
+      parameters: 
+        - in: path
+          schema: 
+            type: string
+          required: true
+          name: mtm
+          description: The machine type model designation of a Power server (ie 9117-MMD)
+      responses:
+        '200':
+          description: Succesful return of a list of dates
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 'Announced: 3/10/2012; Generally Available: 19/10/2012; Withdrawn: 30/11/2015; End of Support: 30/06/2021'
+  /json/{mtm}:
+    get:
+      summary: Get json document of dates
+      description: Return a JSON object that includes all of the dates relevant to a specific machine type model
+      parameters: 
+        - in: path
+          schema: 
+            type: string
+          required: true
+          name: mtm
+          description: The machine type model designation of a Power server (ie 9117-MMD)
+      responses:
+        '200':
+          description: Succesful return of a JSON socument of dates
+          content:
+            application/json::
+              schema:
+                $ref: "#/components/schemas/dates"
