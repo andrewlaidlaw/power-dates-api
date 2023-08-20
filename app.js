@@ -289,6 +289,54 @@ app.get('/dates/:mtm', (req, res) => {
     finddates(datesquery).catch(console.dir);
 })
 
+// Get the sales manual link for the Machine Type Model (MTM)
+app.get('/smurl/:mtm', (req, res) => {
+    // TODO
+    // Build logic to check that MTM is valid and in correct format
+
+    // Create the query document for MongoDB
+    const smurlquery = {'mtm': req.params.mtm.toUpperCase() };
+    console.log("1 Query is: " + JSON.stringify(smurlquery));
+    
+    // Create a new MongoDB Client connection
+    const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log("connection created");
+    
+    // Define our lookup function
+    async function findsmurl(findQuery) {
+        var result = ""
+        try {
+            await client.connect();
+            console.log("connected");
+            const collection = client.db(mongoDatabase).collection(mongoCollection);
+            console.log("collection set");
+            result = await collection.findOne(findQuery);
+            console.log("search completed");
+        } finally {
+            await client.close();
+            console.log("client closed");
+        }
+        console.log("returning result:");
+        console.log(result);
+        // If there is a result, return the link to the Sales Manual page
+        if (result) {
+            // Check that we have a link available
+            if (result.smlink) {
+                output = result.smlink;
+            } else {
+                output = "No link available for MTM " + req.params.mtm + ".";
+            }
+        } else {
+            // Otherwise explain why we can't
+            output = "No servers with MTM " + req.params.mtm + " found."
+        }
+        console.log(output);
+        res.send(output);
+    }
+    // Try to find the various relevant dates for our specified MTM
+    findsmurl(smurlquery).catch(console.dir);
+})
+
 app.get('/json/:mtm', (req, res) => {
     // TODO
     // Build logic to check that MTM is valid and in correct format
@@ -324,6 +372,9 @@ app.get('/json/:mtm', (req, res) => {
             output.available = result.ga;
             output.wdfm = result.wdfm;
             output.eos = result.eos;
+            if (result.smlink) {
+                output.smurl = result.smlink
+            };
         } else {
             // Otherwise explain why we can't
             output = {"success": 0, "message": "No servers with MTM " + req.params.mtm + " found."};

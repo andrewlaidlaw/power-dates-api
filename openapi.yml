@@ -24,6 +24,9 @@ components:
         eos:
           type: string
           example: "30/06/2021"
+        smurl:
+          type: string
+          example: "https://www.ibm.com/docs/en/announcements/power-e870c-enterprise-server-model-mme"
 
 paths:
   /healthz:
@@ -135,6 +138,25 @@ paths:
               schema:
                 type: string
                 example: 'Announced: 3/10/2012; Generally Available: 19/10/2012; Withdrawn: 30/11/2015; End of Support: 30/06/2021'
+  /smurl/{mtm}:
+    get:
+      summary: Get sales manual link
+      description: Return the URL of the sales manual for a specific machine type model
+      parameters: 
+        - in: path
+          schema: 
+            type: string
+          required: true
+          name: mtm
+          description: The machine type model designation of a Power server (ie 9117-MMD)
+      responses:
+        '200':
+          description: Succesful return of sales manual URL
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: 'https://www.ibm.com/docs/en/announcements/power-e870c-enterprise-server-model-mme'
   /json/{mtm}:
     get:
       summary: Get json document of dates
