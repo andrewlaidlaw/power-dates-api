@@ -1,4 +1,8 @@
 {
+  "name" : "power-date-finder",
+  "version": "1.0",
+  "description": "An API service to identify the important dates in the lifecycle of an IBM Power server, including: announcement; general availability; withdrawal from marketing; and end of service",
+  "homepage": "https://github.com/andrewlaidlaw/power-dates-api",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
@@ -6,8 +10,13 @@
   },
   "scripts": {
     "start": "node app.js",
-    "debug": "node --inspect app.js"
+    "debug": "node --inspect app.js",
+    "test": "node app-test.js"
   },
   "main": "app.js",
-  "author": "Andrew Laidlaw"
+  "author": "Andrew Laidlaw <andrew.laidlaw@uk.ibm.com> (https://github.com/andrewlaidlaw)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrewlaidlaw/power-dates-api.git"
+  }
 }

@@ -10,8 +10,9 @@ components:
     dates:
       type: object
       properties:
-        success:
-          type: boolean
+        status:
+          type: string
+          example: success
         announce: 
           type: string
           example: "03/10/2012"
@@ -170,7 +171,36 @@ paths:
           description: The machine type model designation of a Power server (ie 9117-MMD)
       responses:
         '200':
-          description: Succesful return of a JSON socument of dates
+          description: Succesful return of a JSON document of dates
+          content:
+            application/json::
+              schema:
+                $ref: "#/components/schemas/dates"
+  /json:
+    post:
+      summary: Get json document of dates
+      description: Return a JSON object that includes all of the dates relevant to a specific machine type model
+      requestBody:
+        description: The machine type model designation of a Power server (ie 9117-MMD)
+        required: true
+        content:
+            application/x-www-form-urlencoded:
+              schema:
+                type: object
+                properties:
+                  mtm:
+                    type: string
+                    example: 9117-MMD
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mtm:
+                    type: string
+                    example: 9117-MMD
+      responses:
+        '200':
+          description: Succesful return of a JSON document of dates
           content:
             application/json::
               schema:
