@@ -169,6 +169,7 @@ app.get('/json/:mtm', async (req, res) => {
             output.available = result.ga;
             output.wdfm = result.wdfm;
             output.eos = result.eos;
+            output.mtm = result.mtm;
             if (result.smlink) {
                 output.smurl = result.smlink
             };
@@ -190,6 +191,7 @@ app.post('/json', async (req,res) => {
             output.available = result.ga;
             output.wdfm = result.wdfm;
             output.eos = result.eos;
+            output.mtm = result.mtm;
             if (result.smlink) {
                 output.smurl = result.smlink
             };
