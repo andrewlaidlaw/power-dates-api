@@ -22,8 +22,8 @@ const mongoCollection = "dates";
 // Used for OpenShift environment
 // var url = "mongodb://" + mongoUser + ":" + mongoPassword + "@" + mongoHost + ":" + mongoPort + "/" + mongoDatabase
 // Used for local testing
-var url = "mongodb://localhost:27017/dates"
-// var url = "mongodb+srv://andrew:Fdpgz9Cf@cluster0.xahhl.mongodb.net/?retryWrites=true&w=majority";
+// var url = "mongodb://localhost:27017/dates"
+var url = "mongodb+srv://andrew:Fdpgz9Cf@cluster0.xahhl.mongodb.net/?retryWrites=true&w=majority";
 console.log("MongoDB instance is at: " + url)
 
 // Set Express.js to listen for all connections
@@ -169,6 +169,7 @@ app.get('/json/:mtm', async (req, res) => {
             output.available = result.ga;
             output.wdfm = result.wdfm;
             output.eos = result.eos;
+            output.mtm = result.mtm;
             if (result.smlink) {
                 output.smurl = result.smlink
             };
@@ -190,6 +191,7 @@ app.post('/json', async (req,res) => {
             output.available = result.ga;
             output.wdfm = result.wdfm;
             output.eos = result.eos;
+            output.mtm = result.mtm;
             if (result.smlink) {
                 output.smurl = result.smlink
             };

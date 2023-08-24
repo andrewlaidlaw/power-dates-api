@@ -25,6 +25,9 @@ components:
         eos:
           type: string
           example: "30/06/2021"
+        mtm:
+          type: string
+          example: "9117-MMD"
         smurl:
           type: string
           example: "https://www.ibm.com/docs/en/announcements/power-e870c-enterprise-server-model-mme"
